@@ -1,4 +1,5 @@
 import multiprocessing
+import os
 
 # Nombre de workers
 workers = multiprocessing.cpu_count() * 2 + 1
