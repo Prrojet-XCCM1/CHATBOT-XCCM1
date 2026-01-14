@@ -1,3 +1,4 @@
+from typing import List
 from app.agents.base_agent import BaseAgent
 from app.models.message import AgentRequest, AgentResponse, UserRole
 import json

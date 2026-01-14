@@ -1,0 +1,44 @@
+{
+  "mathematics": {
+    "description": "Science des nombres, des quantités, des formes et des relations logiques.",
+    "key_concepts": ["Algèbre", "Géométrie", "Analyse", "Statistiques", "Probabilités"],
+    "teaching_approach": "Approche progressive avec preuves et applications pratiques.",
+    "common_difficulties": ["Abstraction", "Raisonnement formel", "Calcul mental"],
+    "resources": ["Khan Academy", "GeoGebra", "Wolfram Alpha", "Manuels scolaires"]
+  },
+  "physics": {
+    "description": "Science qui étudie les propriétés de la matière et de l'énergie.",
+    "key_concepts": ["Mécanique", "Thermodynamique", "Électromagnétisme", "Optique"],
+    "teaching_approach": "Combinaison de théorie, démonstrations et expériences.",
+    "common_difficulties": ["Concepts abstraits", "Mathématiques appliquées", "Visualisation"],
+    "resources": ["PhET Simulations", "Physics Classroom", "YouTube EDU", "Labos virtuels"]
+  },
+  "computer_science": {
+    "description": "Science du traitement automatique de l'information par des machines.",
+    "key_concepts": ["Algorithmique", "Programmation", "Structures de données", "Réseaux"],
+    "teaching_approach": "Apprentissage par la pratique avec projets concrets.",
+    "common_difficulties": ["Pensée algorithmique", "Débogage", "Abstraction"],
+    "resources": ["GitHub", "Stack Overflow", "FreeCodeCamp", "Coursera"]
+  },
+  "life_sciences": {
+    "description": "Étude des organismes vivants et de leurs interactions.",
+    "key_concepts": ["Biologie cellulaire", "Génétique", "Écologie", "Évolution"],
+    "teaching_approach": "Observation, expérimentation et études de cas.",
+    "common_difficulties": ["Terminologie", "Processus complexes", "Mémorisation"],
+    "resources": ["NCBI", "Khan Academy Biology", "Nature", "Science Daily"]
+  },
+  "databases": {
+    "description": "Gestion et organisation structurée des données pour consultation et mise à jour.",
+    "key_concepts": ["SQL", "Modélisation", "Normalisation", "Transactions", "SGBD"],
+    "teaching_approach": "Apprentissage par la création et l'interrogation de bases réelles.",
+    "common_difficulties": ["Modélisation conceptuelle", "Optimisation", "Intégrité des données"],
+    "resources": ["SQLZoo", "PostgreSQL Docs", "DB Fiddle", "Architecture Patterns"]
+  },
+  "artificial_intelligence": {
+    "description": "Création de systèmes intelligents capables d'apprendre et de s'adapter.",
+    "key_concepts": ["Machine Learning", "Deep Learning", "NLP", "Vision par ordinateur"],
+    "teaching_approach": "Théorie combinée avec des projets pratiques utilisant des frameworks modernes.",
+    "common_difficulties": ["Concepts mathématiques sous-jacents", "Traitement des données", "Évaluation"],
+    "resources": ["TensorFlow", "PyTorch", "Kaggle", "Papers with Code", "Fast.ai"]
+  }
+}
