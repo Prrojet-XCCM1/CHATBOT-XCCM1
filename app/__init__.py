@@ -7,6 +7,10 @@ def create_app():
     
     # Configuration
     app.config.from_pyfile('config.py')
+
+
+    # Configuration basique
+    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-key')
     
     # CORS
     CORS(app, resources={r"/api/*": {"origins": "*"}})

@@ -1,5 +1,5 @@
 from app.models.base import BaseModel, Discipline
-from typing import Optional, Dict
+from typing import List, Optional, Dict
 from enum import Enum
 
 class AgentType(str, Enum):

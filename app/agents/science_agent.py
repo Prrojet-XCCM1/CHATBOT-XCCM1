@@ -1,3 +1,4 @@
+from typing import List
 from app.agents.student_assistant import StudentAssistantAgent
 from app.models.message import AgentRequest, AgentResponse
 

@@ -1,27 +1,34 @@
 from abc import ABC, abstractmethod
 from app.models.message import AgentRequest, AgentResponse
-from app.services.llm_service import LLMService
+from app.config import Config
+import openai
+import asyncio
+from openai import AsyncOpenAI  # Note: AsyncOpenAI
 
 class BaseAgent(ABC):
     def __init__(self, agent_type: str, discipline: str):
         self.agent_type = agent_type
         self.discipline = discipline
-        self.llm_service = LLMService()
+        
+        # Utiliser AsyncOpenAI
+        self.client = AsyncOpenAI(
+            base_url=Config.OPENROUTER_BASE_URL,
+            api_key=Config.OPENROUTER_API_KEY,
+            default_headers={
+                "HTTP-Referer": "http://localhost:5000",
+                "X-Title": "Education Multi-Agent System"
+            }
+        )
     
-    @abstractmethod
-    async def generate_response(self, request: AgentRequest) -> AgentResponse:
-        pass
-    
-    async def call_llm(self, messages: list, temperature: float = 0.7, model: str = None) -> str:
+    async def call_openai(self, messages: list, temperature: float = 0.7) -> str:
+        """Appeler l'API OpenAI/OpenRouter (asynchrone)"""
         try:
-            if model is None:
-                model = self.llm_service.get_model_for_discipline(self.discipline)
-            
-            response_text = await self.llm_service.generate_completion(
+            response = await self.client.chat.completions.create(
+                model=Config.OPENROUTER_MODEL,
                 messages=messages,
-                model=model,
-                temperature=temperature
+                temperature=temperature,
+                max_tokens=Config.MAX_TOKENS
             )
-            return response_text
+            return response.choices[0].message.content
         except Exception as e:
-            raise Exception(f"LLM API error: {str(e)}")
+            raise Exception(f"OpenAI API error: {str(e)}")
