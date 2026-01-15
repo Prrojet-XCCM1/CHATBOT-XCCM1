@@ -12,6 +12,7 @@ def setup_swagger(app):
                 "model_filter": lambda tag: True,
             }
         ],
+       
         "static_url_path": "/flasgger_static",
         "swagger_ui": True,
         "specs_route": "/docs/",
@@ -40,6 +41,17 @@ def setup_swagger(app):
             "description": "API pour le système multi-agent éducatif",
             "version": "1.0.0"
         },
+         "servers": [
+        {
+            "url": "http://localhost:5000",
+            "description": "Serveur de développement local"
+        },
+        {
+            "url": "https://chatbotxccm1.onrender.com",
+            "description": "Serveur de production (Render)"
+        },
+       
+    ],
         "host": "localhost:5000",
         "basePath": "/api",
         "schemes": ["http", "https"],

@@ -18,7 +18,8 @@ class Config:
         'mistral': 'mistralai/mistral-7b-instruct',
         'gemini': 'google/gemini-pro',
         'claude': 'anthropic/claude-3-haiku',
-        'gpt': 'openai/gpt-4'
+        'gpt': 'openai/gpt-4',
+        'geminiflash': 'google/gemini-2.0-flash-001'
     }
 
     # Redis (utilisé pour la mise en cache cloud gratuit sur render)

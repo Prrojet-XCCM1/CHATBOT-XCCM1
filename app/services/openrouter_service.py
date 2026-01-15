@@ -55,7 +55,7 @@ class OpenRouterService:
     def select_model_by_discipline(self, discipline: str) -> str:
         """Sélectionner un modèle optimal selon la discipline"""
         model_mapping = {
-            'mathematics': Config.OPENROUTER_MODELS['llama'],  # Bon pour le raisonnement
+            'mathematics': Config.OPENROUTER_MODELS['geminiflash'],  # Bon pour le raisonnement
             'physics': Config.OPENROUTER_MODELS['llama'],  # Bon pour les sciences
             'computer_science': Config.OPENROUTER_MODELS['gpt'],  # Bon pour le code
             'life_sciences': Config.OPENROUTER_MODELS['claude'],  # Bon pour les textes longs
