@@ -8,8 +8,10 @@ import asyncio
 import functools
 import traceback
 
+from asgiref.sync import async_to_sync
+
 # Configurer le logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 api_bp = Blueprint('api', __name__)
@@ -18,22 +20,10 @@ coordinator = AgentCoordinator()
 logger.info(f"AgentCoordinator initialized with {len(coordinator.agents)} agents")
 
 def async_handler(f):
-    """Décorateur pour gérer les fonctions asynchrones dans Flask"""
+    """Gérer les fonctions asynchrones de manière compatible avec Flask sync"""
     @functools.wraps(f)
     def wrapper(*args, **kwargs):
-        logger.debug(f"Executing async function: {f.__name__}")
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        try:
-            result = loop.run_until_complete(f(*args, **kwargs))
-            logger.debug(f"Async function {f.__name__} completed successfully")
-            return result
-        except Exception as e:
-            logger.error(f"Error in async handler for {f.__name__}: {str(e)}")
-            logger.error(traceback.format_exc())
-            return jsonify({"error": {"message": str(e), "code": "INTERNAL_ERROR"}}), 500
-        finally:
-            loop.close()
+        return async_to_sync(f)(*args, **kwargs)
     return wrapper
 
 @api_bp.route('/health', methods=['GET'])
@@ -170,21 +160,27 @@ async def chat():
         
         logger.info(f"Request data: {data}")
         
-        if 'question' not in data:
-            logger.warning("Missing 'question' field in request")
-            return jsonify({"error": {"message": "Missing 'question' field", "code": "VALIDATION_ERROR"}}), 400
+        if 'question' not in data or not data.get('question', '').strip():
+            logger.warning("Missing or empty 'question' field in request")
+            return jsonify({"error": {"message": "Missing or empty 'question' field", "code": "VALIDATION_ERROR"}}), 400
         
-        # Validation des données avec valeurs par défaut
+        # Validation des données
         try:
             agent_request = AgentRequest(
-                question=data.get('question', 'Test question'),
+                question=data['question'],
                 user_id=data.get('user_id', 'anonymous'),
-                user_role=UserRole(data.get('user_role', 'student')),
-                discipline=Discipline(data.get('discipline', 'general')),
+                user_role=UserRole(data['user_role']) if 'user_role' in data else UserRole.STUDENT,
+                discipline=Discipline(data['discipline']) if 'discipline' in data else Discipline.GENERAL,
                 course_context=data.get('course_context', ''),
                 difficulty_level=DifficultyLevel(data.get('difficulty_level', 'intermediate')),
                 conversation_history=data.get('conversation_history', [])
             )
+            
+            # Vérifier que les champs requis étaient présents pour le test
+            if 'user_role' not in data or 'discipline' not in data:
+                logger.warning("Missing required fields: user_role or discipline")
+                return jsonify({"error": {"message": "Missing user_role or discipline", "code": "VALIDATION_ERROR"}}), 400
+                
             logger.info(f"AgentRequest created successfully")
         except ValueError as e:
             logger.error(f"Validation error creating AgentRequest: {str(e)}")
@@ -196,7 +192,7 @@ async def chat():
             response = await coordinator.process_request(agent_request)
             logger.info(f"Response generated successfully by agent: {response.agent_type}")
             
-            return jsonify(response.dict())
+            return jsonify(response.model_dump())
             
         except Exception as e:
             logger.error(f"Error in coordinator.process_request: {str(e)}")

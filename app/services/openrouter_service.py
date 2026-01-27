@@ -12,7 +12,7 @@ class OpenRouterService:
             base_url=Config.OPENROUTER_BASE_URL,
             api_key=Config.OPENROUTER_API_KEY,
             default_headers={
-                "HTTP-Referer": "http://localhost:5000",  # Votre URL
+                "HTTP-Referer": Config.SITE_URL,  # Votre URL
                 "X-Title": "Education Multi-Agent System"
             }
         )

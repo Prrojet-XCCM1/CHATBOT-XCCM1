@@ -15,7 +15,7 @@ class BaseAgent(ABC):
             base_url=Config.OPENROUTER_BASE_URL,
             api_key=Config.OPENROUTER_API_KEY,
             default_headers={
-                "HTTP-Referer": "http://localhost:5000",
+                "HTTP-Referer": Config.SITE_URL,
                 "X-Title": "Education Multi-Agent System"
             }
         )

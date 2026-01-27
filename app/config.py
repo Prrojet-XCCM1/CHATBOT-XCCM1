@@ -32,6 +32,9 @@ class Config:
     # Redis
     REDIS_URL = os.getenv('REDIS_URL', 'redis://localhost:6379/0')
     
+    # URL du site pour OpenRouter
+    SITE_URL = os.getenv('SITE_URL', 'http://localhost:5000')
+    
     # Domaines supportés
     SUPPORTED_DISCIPLINES = [
         'mathematics',
