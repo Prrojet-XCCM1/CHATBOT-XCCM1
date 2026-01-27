@@ -40,57 +40,46 @@ def setup_swagger(app):
     }
     
     swagger_template = {
-        "openapi": "3.0.3",
+        "swagger": "2.0",
         "info": {
             "title": "Education Multi-Agent API",
             "description": "API pour le système multi-agent éducatif",
             "version": "1.0.0"
         },
-        "servers": [
-            {
-                "url": "http://localhost:5000/api",
-                "description": "Serveur de développement local"
-            },
-            {
-                "url": "https://chatbotxccm1.onrender.com/api",
-                "description": "Serveur de production (Render)"
-            }
-        ],
-        "paths": {},
-        "components": {
-            "schemas": {
-                "AgentRequest": {
-                    "type": "object",
-                    "required": ["question", "user_role", "discipline"],
-                    "properties": {
-                        "question": {
-                            "type": "string",
-                            "example": "Quelle est la formule de l'aire d'un cercle ?"
-                        },
-                        "user_id": {
-                            "type": "string",
-                            "example": "student_123"
-                        },
-                        "user_role": {
-                            "type": "string",
-                            "enum": ["student", "teacher", "admin"],
-                            "example": "student"
-                        },
-                        "discipline": {
-                            "type": "string",
-                            "enum": ["mathematics", "physics", "computer_science", 
-                                    "life_sciences", "databases", "artificial_intelligence", "general"],
-                            "example": "mathematics"
-                        },
-                        "course_context": {
-                            "type": "string",
-                            "example": "Cours de géométrie de base"
-                        },
-                        "difficulty_level": {
-                            "type": "string",
-                            "enum": ["beginner", "intermediate", "advanced"],
-                            "example": "beginner"
-                        }
+        "basePath": "/api",
+        "schemes": ["http", "https"],
+        "definitions": {
+            "AgentRequest": {
+                "type": "object",
+                "required": ["question", "user_role", "discipline"],
+                "properties": {
+                    "question": {
+                        "type": "string",
+                        "example": "Quelle est la formule de l'aire d'un cercle ?"
+                    },
+                    "user_id": {
+                        "type": "string",
+                        "example": "student_123"
+                    },
+                    "user_role": {
+                        "type": "string",
+                        "enum": ["student", "teacher", "admin"],
+                        "example": "student"
+                    },
+                    "discipline": {
+                        "type": "string",
+                        "enum": ["mathematics", "physics", "computer_science", 
+                                "life_sciences", "databases", "artificial_intelligence", "general"],
+                        "example": "mathematics"
+                    },
+                    "course_context": {
+                        "type": "string",
+                        "example": "Cours de géométrie de base"
+                    },
+                    "difficulty_level": {
+                        "type": "string",
+                        "enum": ["beginner", "intermediate", "advanced"],
+                        "example": "beginner"
                     }
                 }
             }
