@@ -12,6 +12,16 @@ def setup_swagger(app):
                 "model_filter": lambda tag: True,
             }
         ],
+        "urls": [
+            {
+                "name": "Local server",
+                "url": "http://localhost:5000/apispec.json"
+            },
+            {
+                "name": "Render (chatbotxccm1)",
+                "url": "https://chatbotxccm1.onrender.com/apispec.json"
+            }
+        ],
        
         "static_url_path": "/flasgger_static",
         "swagger_ui": True,
