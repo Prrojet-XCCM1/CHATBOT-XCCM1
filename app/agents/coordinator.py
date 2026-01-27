@@ -16,8 +16,18 @@ class AgentCoordinator:
             self.agents[f"teacher_{discipline}"] = TeacherAssistantAgent(discipline)
     
     def get_agent(self, user_role: str, discipline: str) -> BaseAgent:
+        # Tenter de récupérer l'agent spécifique
         agent_key = f"{user_role}_{discipline}"
-        return self.agents.get(agent_key, self.agents[f"{user_role}_general"])
+        if agent_key in self.agents:
+            return self.agents[agent_key]
+        
+        # Repli sur le général pour le rôle demandé
+        role_general = f"{user_role}_general"
+        if role_general in self.agents:
+            return self.agents[role_general]
+            
+        # Repli ultime sur student_general si rien d'autre ne match
+        return self.agents.get("student_general")
     
     async def process_request(self, request: AgentRequest) -> AgentResponse:
         # Récupérer l'agent approprié
