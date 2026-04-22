@@ -21,11 +21,9 @@ jobs:
           cache: 'pip'
       - name: Install dependencies
         run: |
-          cd IAXCCM
           pip install -r requirements.txt
       - name: Run Tests
         run: |
-          cd IAXCCM
           # pytest || echo "No tests found"
           echo "Tests passed (placeholder)"
 
@@ -63,7 +61,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: ./IAXCCM
+          context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
