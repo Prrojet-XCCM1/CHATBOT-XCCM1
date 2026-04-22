@@ -3,8 +3,7 @@ name: IAXCCM CI/CD
 on:
   push:
     branches: ["main"]
-    paths:
-      - "IAXCCM/**"
+
 
 env:
   REGISTRY: ghcr.io
