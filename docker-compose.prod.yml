@@ -10,6 +10,8 @@ services:
       BACKEND_URL: http://xccm1-backend:8080
     networks:
       - xccm-network
+    ports:
+      - "5000:5000"
     restart: always
 
 networks:
