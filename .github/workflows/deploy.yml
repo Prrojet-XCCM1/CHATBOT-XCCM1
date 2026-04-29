@@ -67,24 +67,25 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
   deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to VPS
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            OWNER_LOWER=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')
-            IMAGE_FULL="ghcr.io/$OWNER_LOWER/iaxccm:latest"
-            
-            cd ${{ secrets.DEPLOY_PATH || '~/xccm' }}/IAXCCM
-            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            
-            # Pull and restart the specific service
-            DOCKER_IMAGE=$IMAGE_FULL docker compose -f docker-compose.prod.yml pull
-            DOCKER_IMAGE=$IMAGE_FULL docker compose -f docker-compose.prod.yml up -d
-            
-            docker image prune -f
+      needs: build
+      runs-on: ubuntu-latest
+      steps:
+        - name: Deploy to VPS
+          uses: appleboy/ssh-action@v1.0.3
+          with:
+            host: ${{ secrets.SSH_HOST }}
+            username: ${{ secrets.SSH_USER }}
+            key: ${{ secrets.SSH_KEY }}
+            script: |
+              OWNER_LOWER=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')
+              IMAGE_FULL="ghcr.io/$OWNER_LOWER/iaxccm:latest"
+              
+              cd ${{ secrets.DEPLOY_PATH || '~/xccm' }}/IAXCCM
+              echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+              
+              # Correction ici : on injecte la clé API pour OpenRouter
+              DOCKER_IMAGE=$IMAGE_FULL \
+              OPENROUTER_API_KEY="${{ secrets.OPENROUTER_API_KEY }}" \
+              docker compose -f docker-compose.prod.yml up -d --pull always
+              
+              docker image prune -f
