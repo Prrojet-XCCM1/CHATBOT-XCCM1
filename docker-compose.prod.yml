@@ -7,7 +7,7 @@ services:
     environment:
       OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
       LLM_SERVICE_URL: http://xccm-llm-service:8000
-      BACKEND_URL: http://xccm-backend:8080
+      BACKEND_URL: http://xccm1-backend:8080
     networks:
       - xccm-network
     restart: always
