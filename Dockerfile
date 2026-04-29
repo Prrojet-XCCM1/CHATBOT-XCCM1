@@ -23,4 +23,4 @@ USER appuser
 EXPOSE 5000
 
 # Commande de démarrage
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "4", "--worker-class", "uvicorn.workers.UvicornWorker", "run:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
