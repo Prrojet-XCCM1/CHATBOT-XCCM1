@@ -192,7 +192,9 @@ async def chat():
             response = await coordinator.process_request(agent_request)
             logger.info(f"Response generated successfully by agent: {response.agent_type}")
             
-            return jsonify(response.model_dump())
+            # Retourner une réponse simplifiée si nécessaire, ou l'objet complet
+            # Si votre frontend affiche tout le JSON, c'est qu'il attendait peut-être juste la chaîne 'answer'
+            return jsonify(response.answer) 
             
         except Exception as e:
             logger.error(f"Error in coordinator.process_request: {str(e)}")
