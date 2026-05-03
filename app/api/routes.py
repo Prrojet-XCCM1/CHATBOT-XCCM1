@@ -160,7 +160,11 @@ async def chat():
         
         logger.info(f"Request data: {data}")
         
-        if 'question' not in data or not data.get('question', '').strip():
+        # Rendre le champ 'question' plus flexible (accepter 'message' ou 'content' du frontend)
+        if 'question' not in data:
+            data['question'] = data.get('message') or data.get('content') or data.get('text')
+            
+        if not data.get('question') or not str(data.get('question')).strip():
             logger.warning("Missing or empty 'question' field in request")
             return jsonify({"error": {"message": "Missing or empty 'question' field", "code": "VALIDATION_ERROR"}}), 400
         
