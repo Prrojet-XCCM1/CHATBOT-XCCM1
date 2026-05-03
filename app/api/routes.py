@@ -160,9 +160,9 @@ async def chat():
         
         logger.info(f"Request data: {data}")
         
-        # Rendre le champ 'question' plus flexible (accepter 'message' ou 'content' du frontend)
+        # Rendre le champ 'question' plus flexible (accepter 'message', 'content' ou 'topic' du frontend)
         if 'question' not in data:
-            data['question'] = data.get('message') or data.get('content') or data.get('text')
+            data['question'] = data.get('message') or data.get('content') or data.get('topic') or data.get('text')
             
         if not data.get('question') or not str(data.get('question')).strip():
             logger.warning("Missing or empty 'question' field in request")
