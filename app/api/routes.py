@@ -180,11 +180,7 @@ async def chat():
                 conversation_history=data.get('conversation_history', [])
             )
             
-            # Vérifier que les champs requis étaient présents pour le test
-            if 'user_role' not in data or 'discipline' not in data:
-                logger.warning("Missing required fields: user_role or discipline")
-                return jsonify({"error": {"message": "Missing user_role or discipline", "code": "VALIDATION_ERROR"}}), 400
-                
+            # Les valeurs par défaut sont déjà gérées par le constructeur AgentRequest ci-dessus
             logger.info(f"AgentRequest created successfully")
         except ValueError as e:
             logger.error(f"Validation error creating AgentRequest: {str(e)}")
